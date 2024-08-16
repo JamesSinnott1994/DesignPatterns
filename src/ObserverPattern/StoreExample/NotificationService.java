@@ -1,26 +1,26 @@
 package ObserverPattern.StoreExample;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class NotificationService {
 
-    private final List<EmailMsgListener> customers;
+    private final Map<Event, List<EventListener>> customers;
 
     public NotificationService() {
-        customers = new ArrayList<>();
+        customers = new HashMap<>();
+        Arrays.stream(Event.values()).forEach(event -> customers.put(event, new ArrayList<>()));
     }
 
-    public void subscribe(EmailMsgListener listener) {
-        customers.add(listener);
+    public void subscribe(Event eventType, EventListener listener) {
+        customers.get(eventType).add(listener);
     }
 
-    public void unsubscribe(EmailMsgListener listener) {
-        customers.remove(listener);
+    public void unsubscribe(Event eventType, EventListener listener) {
+        customers.get(eventType).remove(listener);
     }
 
-    public void notifyCustomers() {
-        customers.forEach(listener -> listener.update());
+    public void notifyCustomers(Event eventType) {
+        customers.get(eventType).forEach(listener -> listener.update(eventType));
     }
 
 }

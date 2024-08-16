@@ -1,6 +1,6 @@
 package ObserverPattern.StoreExample;
 
-public class EmailMsgListener {
+public class EmailMsgListener implements EventListener {
 
     private final String email;
 
@@ -8,7 +8,8 @@ public class EmailMsgListener {
         this.email = email;
     }
 
-    public void update() {
+    @Override
+    public void update(Event eventType) {
         // Actually send the mail
     }
 
